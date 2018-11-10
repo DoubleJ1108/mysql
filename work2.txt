@@ -1,0 +1,528 @@
+C:\WINDOWS\system32>MySQL -u root -p
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 30
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> use wang100;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_wang100 |
++-------------------+
+| countries         |
+| departments       |
+| employees         |
+| gouwuche          |
+| job_history       |
+| jobs              |
+| locations         |
+| rejions           |
++-------------------+
+8 rows in set (1.46 sec)
+
+mysql> desc jobs;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| JOB_ID     | varchar(255) | YES  |     | NULL    |       |
+| JOB_TITLE  | varchar(255) | YES  |     | NULL    |       |
+| min_salary | varchar(8)   | YES  |     | NULL    |       |
+| MAX_SALARY | varchar(255) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (1.30 sec)
+
+mysql> select * from jobs;
++------------+---------------------------------+------------+------------+
+| JOB_ID     | JOB_TITLE                       | min_salary | MAX_SALARY |
++------------+---------------------------------+------------+------------+
+| AD_PRES    | President                       | 20080      | 40000      |
+| AD_VP      | Administration Vice President   | 15000      | 30000      |
+| AD_ASST    | Administration Assistant        | 3000       | 6000       |
+| FI_MGR     | Finance Manager                 | 8200       | 16000      |
+| FI_ACCOUNT | Accountant                      | 4200       | 9000       |
+| AC_MGR     | Accounting Manager              | 8200       | 16000      |
+| AC_ACCOUNT | Public Accountant               | 4200       | 9000       |
+| SA_MAN     | Sales Manager                   | 10000      | 20080      |
+| SA_REP     | Sales Representative            | 6000       | 12008      |
+| PU_MAN     | Purchasing Manager              | 8000       | 15000      |
+| PU_CLERK   | Purchasing Clerk                | 2500       | 5500       |
+| ST_MAN     | Stock Manager                   | 5500       | 8500       |
+| ST_CLERK   | Stock Clerk                     | 2008       | 5000       |
+| SH_CLERK   | Shipping Clerk                  | 2500       | 5500       |
+| IT_PROG    | Programmer                      | 4000       | 10000      |
+| MK_MAN     | Marketing Manager               | 9000       | 15000      |
+| MK_REP     | Marketing Representative        | 4000       | 9000       |
+| HR_REP     | Human Resources Representative  | 4000       | 9000       |
+| PR_REP     | Public Relations Representative | 4500       | 10500      |
++------------+---------------------------------+------------+------------+
+19 rows in set (0.00 sec)
+
+mysql> alter table jobs change min_salary min_salary int;
+Query OK, 19 rows affected (13.57 sec)
+Records: 19  Duplicates: 0  Warnings: 0
+
+mysql> select * from jobs where min_salary>8000;
++---------+-------------------------------+------------+------------+
+| JOB_ID  | JOB_TITLE                     | min_salary | MAX_SALARY |
++---------+-------------------------------+------------+------------+
+| AD_PRES | President                     |      20080 | 40000      |
+| AD_VP   | Administration Vice President |      15000 | 30000      |
+| FI_MGR  | Finance Manager               |       8200 | 16000      |
+| AC_MGR  | Accounting Manager            |       8200 | 16000      |
+| SA_MAN  | Sales Manager                 |      10000 | 20080      |
+| MK_MAN  | Marketing Manager             |       9000 | 15000      |
++---------+-------------------------------+------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select diatinct * from jobs;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from jobs' at line 1
+mysql> select distinct * from jobs;
++------------+---------------------------------+------------+------------+
+| JOB_ID     | JOB_TITLE                       | min_salary | MAX_SALARY |
++------------+---------------------------------+------------+------------+
+| AD_PRES    | President                       |      20080 | 40000      |
+| AD_VP      | Administration Vice President   |      15000 | 30000      |
+| AD_ASST    | Administration Assistant        |       3000 | 6000       |
+| FI_MGR     | Finance Manager                 |       8200 | 16000      |
+| FI_ACCOUNT | Accountant                      |       4200 | 9000       |
+| AC_MGR     | Accounting Manager              |       8200 | 16000      |
+| AC_ACCOUNT | Public Accountant               |       4200 | 9000       |
+| SA_MAN     | Sales Manager                   |      10000 | 20080      |
+| SA_REP     | Sales Representative            |       6000 | 12008      |
+| PU_MAN     | Purchasing Manager              |       8000 | 15000      |
+| PU_CLERK   | Purchasing Clerk                |       2500 | 5500       |
+| ST_MAN     | Stock Manager                   |       5500 | 8500       |
+| ST_CLERK   | Stock Clerk                     |       2008 | 5000       |
+| SH_CLERK   | Shipping Clerk                  |       2500 | 5500       |
+| IT_PROG    | Programmer                      |       4000 | 10000      |
+| MK_MAN     | Marketing Manager               |       9000 | 15000      |
+| MK_REP     | Marketing Representative        |       4000 | 9000       |
+| HR_REP     | Human Resources Representative  |       4000 | 9000       |
+| PR_REP     | Public Relations Representative |       4500 | 10500      |
++------------+---------------------------------+------------+------------+
+19 rows in set (0.00 sec)
+
+mysql> select distinct min_salary from jobs;
++------------+
+| min_salary |
++------------+
+|      20080 |
+|      15000 |
+|       3000 |
+|       8200 |
+|       4200 |
+|      10000 |
+|       6000 |
+|       8000 |
+|       2500 |
+|       5500 |
+|       2008 |
+|       4000 |
+|       9000 |
+|       4500 |
++------------+
+14 rows in set (0.00 sec)
+
+mysql> select * from jobs order by min_salary;
++------------+---------------------------------+------------+------------+
+| JOB_ID     | JOB_TITLE                       | min_salary | MAX_SALARY |
++------------+---------------------------------+------------+------------+
+| ST_CLERK   | Stock Clerk                     |       2008 | 5000       |
+| PU_CLERK   | Purchasing Clerk                |       2500 | 5500       |
+| SH_CLERK   | Shipping Clerk                  |       2500 | 5500       |
+| AD_ASST    | Administration Assistant        |       3000 | 6000       |
+| IT_PROG    | Programmer                      |       4000 | 10000      |
+| MK_REP     | Marketing Representative        |       4000 | 9000       |
+| HR_REP     | Human Resources Representative  |       4000 | 9000       |
+| FI_ACCOUNT | Accountant                      |       4200 | 9000       |
+| AC_ACCOUNT | Public Accountant               |       4200 | 9000       |
+| PR_REP     | Public Relations Representative |       4500 | 10500      |
+| ST_MAN     | Stock Manager                   |       5500 | 8500       |
+| SA_REP     | Sales Representative            |       6000 | 12008      |
+| PU_MAN     | Purchasing Manager              |       8000 | 15000      |
+| FI_MGR     | Finance Manager                 |       8200 | 16000      |
+| AC_MGR     | Accounting Manager              |       8200 | 16000      |
+| MK_MAN     | Marketing Manager               |       9000 | 15000      |
+| SA_MAN     | Sales Manager                   |      10000 | 20080      |
+| AD_VP      | Administration Vice President   |      15000 | 30000      |
+| AD_PRES    | President                       |      20080 | 40000      |
++------------+---------------------------------+------------+------------+
+19 rows in set (0.00 sec)
+
+mysql> select * from jobs order by min_salary desc;
++------------+---------------------------------+------------+------------+
+| JOB_ID     | JOB_TITLE                       | min_salary | MAX_SALARY |
++------------+---------------------------------+------------+------------+
+| AD_PRES    | President                       |      20080 | 40000      |
+| AD_VP      | Administration Vice President   |      15000 | 30000      |
+| SA_MAN     | Sales Manager                   |      10000 | 20080      |
+| MK_MAN     | Marketing Manager               |       9000 | 15000      |
+| FI_MGR     | Finance Manager                 |       8200 | 16000      |
+| AC_MGR     | Accounting Manager              |       8200 | 16000      |
+| PU_MAN     | Purchasing Manager              |       8000 | 15000      |
+| SA_REP     | Sales Representative            |       6000 | 12008      |
+| ST_MAN     | Stock Manager                   |       5500 | 8500       |
+| PR_REP     | Public Relations Representative |       4500 | 10500      |
+| FI_ACCOUNT | Accountant                      |       4200 | 9000       |
+| AC_ACCOUNT | Public Accountant               |       4200 | 9000       |
+| IT_PROG    | Programmer                      |       4000 | 10000      |
+| MK_REP     | Marketing Representative        |       4000 | 9000       |
+| HR_REP     | Human Resources Representative  |       4000 | 9000       |
+| AD_ASST    | Administration Assistant        |       3000 | 6000       |
+| PU_CLERK   | Purchasing Clerk                |       2500 | 5500       |
+| SH_CLERK   | Shipping Clerk                  |       2500 | 5500       |
+| ST_CLERK   | Stock Clerk                     |       2008 | 5000       |
++------------+---------------------------------+------------+------------+
+19 rows in set (0.00 sec)
+
+mysql> select * from jobs order by min_salary desc limit 3;
++---------+-------------------------------+------------+------------+
+| JOB_ID  | JOB_TITLE                     | min_salary | MAX_SALARY |
++---------+-------------------------------+------------+------------+
+| AD_PRES | President                     |      20080 | 40000      |
+| AD_VP   | Administration Vice President |      15000 | 30000      |
+| SA_MAN  | Sales Manager                 |      10000 | 20080      |
++---------+-------------------------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select sum(min_salary) from jobs;
++-----------------+
+| sum(min_salary) |
++-----------------+
+|          124888 |
++-----------------+
+1 row in set (0.03 sec)
+
+mysql> select min(min_salary) from jobs;
++-----------------+
+| min(min_salary) |
++-----------------+
+|            2008 |
++-----------------+
+1 row in set (0.29 sec)
+
+mysql> select count(min_salary) from jobs;
++-------------------+
+| count(min_salary) |
++-------------------+
+|                19 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(min_salary) from jobs group by min_salary;
++-------------------+
+| count(min_salary) |
++-------------------+
+|                 1 |
+|                 1 |
+|                 1 |
+|                 2 |
+|                 2 |
+|                 1 |
+|                 1 |
+|                 1 |
+|                 2 |
+|                 1 |
+|                 1 |
+|                 3 |
+|                 1 |
+|                 1 |
++-------------------+
+14 rows in set (0.00 sec)
+
+mysql> select min_salary,count(min_salary) from jobs group by min_salary;
++------------+-------------------+
+| min_salary | count(min_salary) |
++------------+-------------------+
+|      20080 |                 1 |
+|      15000 |                 1 |
+|       3000 |                 1 |
+|       8200 |                 2 |
+|       4200 |                 2 |
+|      10000 |                 1 |
+|       6000 |                 1 |
+|       8000 |                 1 |
+|       2500 |                 2 |
+|       5500 |                 1 |
+|       2008 |                 1 |
+|       4000 |                 3 |
+|       9000 |                 1 |
+|       4500 |                 1 |
++------------+-------------------+
+14 rows in set (0.00 sec)
+
+mysql> select count(min_salary) from jobs where min_salary>8000 group by min_salary;
++-------------------+
+| count(min_salary) |
++-------------------+
+|                 1 |
+|                 1 |
+|                 2 |
+|                 1 |
+|                 1 |
++-------------------+
+5 rows in set (0.00 sec)
+
+mysql> select min_salary,count(min_salary) from jobs where min_salary>8000 group by min_salary;
++------------+-------------------+
+| min_salary | count(min_salary) |
++------------+-------------------+
+|      20080 |                 1 |
+|      15000 |                 1 |
+|       8200 |                 2 |
+|      10000 |                 1 |
+|       9000 |                 1 |
++------------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql> select min_salary,count(min_salary) from jobs group by min_salary having min_salary>8000;
++------------+-------------------+
+| min_salary | count(min_salary) |
++------------+-------------------+
+|      20080 |                 1 |
+|      15000 |                 1 |
+|       8200 |                 2 |
+|      10000 |                 1 |
+|       9000 |                 1 |
++------------+-------------------+
+5 rows in set (0.02 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_wang100 |
++-------------------+
+| countries         |
+| departments       |
+| employees         |
+| gouwuche          |
+| job_history       |
+| jobs              |
+| locations         |
+| rejions           |
++-------------------+
+8 rows in set (0.82 sec)
+
+mysql> rename table countri to jing1;
+ERROR 1146 (42S02): Table 'wang100.countri' doesn't exist
+mysql> rename table countries to jing1;
+Query OK, 0 rows affected (2.43 sec)
+
+mysql> rename table rejions to jing2;
+Query OK, 0 rows affected (1.29 sec)
+
+mysql> desc jing1;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| COUNTRY_ID   | varchar(255) | YES  |     | NULL    |       |
+| COUNTRY_NAME | varchar(255) | YES  |     | NULL    |       |
+| region_id    | int(11)      | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+3 rows in set (0.44 sec)
+
+mysql> desc jing2;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| region_id   | int(11)      | YES  |     | NULL    |       |
+| REGION_NAME | varchar(255) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+mysql> alter table jing1 change country_id id int;
+ERROR 1366 (HY000): Incorrect integer value: 'AR' for column 'id' at row 1
+mysql> alter table jing1 change region_id id int;
+Query OK, 0 rows affected (6.42 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table jing2 change region_id id int;
+Query OK, 0 rows affected (1.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select id ,id from jing1,jing2 where jing1.id=jing2.id;
+ERROR 1052 (23000): Column 'id' in field list is ambiguous
+mysql> alter table jing2 change id region_id int;
+Query OK, 0 rows affected (3.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select id ,region_id from jing1,jing2 where jing1.id=jing2.region_id;
++------+-----------+
+| id   | region_id |
++------+-----------+
+|    2 |         2 |
+|    3 |         3 |
+|    1 |         1 |
+|    2 |         2 |
+|    2 |         2 |
+|    1 |         1 |
+|    3 |         3 |
+|    1 |         1 |
+|    1 |         1 |
+|    4 |         4 |
+|    1 |         1 |
+|    4 |         4 |
+|    3 |         3 |
+|    1 |         1 |
+|    3 |         3 |
+|    4 |         4 |
+|    3 |         3 |
+|    2 |         2 |
+|    4 |         4 |
+|    1 |         1 |
+|    3 |         3 |
+|    1 |         1 |
+|    2 |         2 |
+|    4 |         4 |
+|    4 |         4 |
++------+-----------+
+25 rows in set (0.09 sec)
+
+mysql> select id,region
+    -> -;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> select id,region_id from jing1 left join jing2 on jing1.id=jing2.rejion_id;
+ERROR 1054 (42S22): Unknown column 'jing2.rejion_id' in 'on clause'
+mysql> select id,region_id from jing1 left join jing2 on jing1.id=jing2.region_id;
++------+-----------+
+| id   | region_id |
++------+-----------+
+|    1 |         1 |
+|    1 |         1 |
+|    1 |         1 |
+|    1 |         1 |
+|    1 |         1 |
+|    1 |         1 |
+|    1 |         1 |
+|    1 |         1 |
+|    2 |         2 |
+|    2 |         2 |
+|    2 |         2 |
+|    2 |         2 |
+|    2 |         2 |
+|    3 |         3 |
+|    3 |         3 |
+|    3 |         3 |
+|    3 |         3 |
+|    3 |         3 |
+|    3 |         3 |
+|    4 |         4 |
+|    4 |         4 |
+|    4 |         4 |
+|    4 |         4 |
+|    4 |         4 |
+|    4 |         4 |
++------+-----------+
+25 rows in set (0.00 sec)
+
+mysql> select * from jing1 where jing1.id in(select region_id from jing2);
++------------+--------------------------+------+
+| COUNTRY_ID | COUNTRY_NAME             | id   |
++------------+--------------------------+------+
+| AR         | Argentina                |    2 |
+| AU         | Australia                |    3 |
+| BE         | Belgium                  |    1 |
+| BR         | Brazil                   |    2 |
+| CA         | Canada                   |    2 |
+| CH         | Switzerland              |    1 |
+| CN         | China                    |    3 |
+| DE         | Germany                  |    1 |
+| DK         | Denmark                  |    1 |
+| EG         | Egypt                    |    4 |
+| FR         | France                   |    1 |
+| IL         | Israel                   |    4 |
+| IN         | India                    |    3 |
+| IT         | Italy                    |    1 |
+| JP         | Japan                    |    3 |
+| KW         | Kuwait                   |    4 |
+| ML         | Malaysia                 |    3 |
+| MX         | Mexico                   |    2 |
+| NG         | Nigeria                  |    4 |
+| NL         | Netherlands              |    1 |
+| SG         | Singapore                |    3 |
+| UK         | United Kingdom           |    1 |
+| US         | United States of America |    2 |
+| ZM         | Zambia                   |    4 |
+| ZW         | Zimbabwe                 |    4 |
++------------+--------------------------+------+
+25 rows in set (0.06 sec)
+
+mysql> select * from jing1 where exists(select region_id from jing2);
++------------+--------------------------+------+
+| COUNTRY_ID | COUNTRY_NAME             | id   |
++------------+--------------------------+------+
+| AR         | Argentina                |    2 |
+| AU         | Australia                |    3 |
+| BE         | Belgium                  |    1 |
+| BR         | Brazil                   |    2 |
+| CA         | Canada                   |    2 |
+| CH         | Switzerland              |    1 |
+| CN         | China                    |    3 |
+| DE         | Germany                  |    1 |
+| DK         | Denmark                  |    1 |
+| EG         | Egypt                    |    4 |
+| FR         | France                   |    1 |
+| IL         | Israel                   |    4 |
+| IN         | India                    |    3 |
+| IT         | Italy                    |    1 |
+| JP         | Japan                    |    3 |
+| KW         | Kuwait                   |    4 |
+| ML         | Malaysia                 |    3 |
+| MX         | Mexico                   |    2 |
+| NG         | Nigeria                  |    4 |
+| NL         | Netherlands              |    1 |
+| SG         | Singapore                |    3 |
+| UK         | United Kingdom           |    1 |
+| US         | United States of America |    2 |
+| ZM         | Zambia                   |    4 |
+| ZW         | Zimbabwe                 |    4 |
++------------+--------------------------+------+
+25 rows in set (0.53 sec)
+
+mysql> select id from jing1 union all select region_id from jing2;
++------+
+| id   |
++------+
+|    2 |
+|    3 |
+|    1 |
+|    2 |
+|    2 |
+|    1 |
+|    3 |
+|    1 |
+|    1 |
+|    4 |
+|    1 |
+|    4 |
+|    3 |
+|    1 |
+|    3 |
+|    4 |
+|    3 |
+|    2 |
+|    4 |
+|    1 |
+|    3 |
+|    1 |
+|    2 |
+|    4 |
+|    4 |
+|    1 |
+|    2 |
+|    3 |
+|    4 |
++------+
+29 rows in set (0.03 sec)
+
+mysql>
