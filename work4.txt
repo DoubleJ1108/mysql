@@ -1,0 +1,82 @@
+create table dianying(dy_name varchar(45),dy_danyan varchar(45),dy_time varchar(45),dy_pingfen float);
+Query OK, 0 rows affected (0.56 sec)
+
+mysql> desc dianying;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| dy_name    | varchar(45) | YES  |     | NULL    |       |
+| dy_danyan  | varchar(45) | YES  |     | NULL    |       |
+| dy_time    | varchar(45) | YES  |     | NULL    |       |
+| dy_pingfen | float       | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into dianying(dy_name,dy_danyan,dy_time,dy_pingfen) values('zhuilong','wangjing','2017',9.0)
+    -> ;
+Query OK, 1 row affected (0.19 sec)
+
+mysql> insert into dianying(dy_name,dy_danyan,dy_time,dy_pingfen) values('kongzhi','biguozhi','2013',8.5),
+    -> ('guaishou','daijin','2018',7.3),('huangquan','juxingmao','2018',8.6);
+Query OK, 3 rows affected (0.23 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from dianying;
++-----------+-----------+---------+------------+
+| dy_name   | dy_danyan | dy_time | dy_pingfen |
++-----------+-----------+---------+------------+
+| zhuilong  | wangjing  | 2017    |          9 |
+| kongzhi   | biguozhi  | 2013    |        8.5 |
+| guaishou  | daijin    | 2018    |        7.3 |
+| huangquan | juxingmao | 2018    |        8.6 |
++-----------+-----------+---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from dianying where dy_name like '%long%';
++----------+-----------+---------+------------+
+| dy_name  | dy_danyan | dy_time | dy_pingfen |
++----------+-----------+---------+------------+
+| zhuilong | wangjing  | 2017    |          9 |
++----------+-----------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from dianying where dy_danyan like '%xin%';
++-----------+-----------+---------+------------+
+| dy_name   | dy_danyan | dy_time | dy_pingfen |
++-----------+-----------+---------+------------+
+| huangquan | juxingmao | 2018    |        8.6 |
++-----------+-----------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from dianying where dy_time like '2018';
++-----------+-----------+---------+------------+
+| dy_name   | dy_danyan | dy_time | dy_pingfen |
++-----------+-----------+---------+------------+
+| guaishou  | daijin    | 2018    |        7.3 |
+| huangquan | juxingmao | 2018    |        8.6 |
++-----------+-----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from dianying where dy_time =2018;
++-----------+-----------+---------+------------+
+| dy_name   | dy_danyan | dy_time | dy_pingfen |
++-----------+-----------+---------+------------+
+| guaishou  | daijin    | 2018    |        7.3 |
+| huangquan | juxingmao | 2018    |        8.6 |
++-----------+-----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from dianying where max(dy_pingfen);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select * from dianying where order by dy_pingfen limit 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by dy_pingfen limit 2' at line 1
+mysql> select * from dianying order by dy_pingfen limit 2;
++----------+-----------+---------+------------+
+| dy_name  | dy_danyan | dy_time | dy_pingfen |
++----------+-----------+---------+------------+
+| guaishou | daijin    | 2018    |        7.3 |
+| kongzhi  | biguozhi  | 2013    |        8.5 |
++----------+-----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql>
