@@ -1,0 +1,90 @@
+Microsoft Windows [版本 10.0.16299.726]
+(c) 2017 Microsoft Corporation。保留所有权利。
+
+C:\WINDOWS\system32>mysql -u root -p
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 36
+Server version: 8.0.12 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use wangjingjing;
+Database changed
+mysql>  create table shoucang(id varchar(20) primary key unique,sc_name varchar(45),sc_jiage int,sc_time datetime,quxiao_sc enum('0','1'));
+Query OK, 0 rows affected (0.72 sec)
+
+mysql> alter table shoucang change quxiao_sc quxiao_sc bit default 1;
+Query OK, 0 rows affected (2.58 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc shoucang;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id        | varchar(20) | NO   | PRI | NULL    |       |
+| sc_name   | varchar(45) | YES  |     | NULL    |       |
+| sc_jiage  | int(11)     | YES  |     | NULL    |       |
+| sc_time   | datetime    | YES  |     | NULL    |       |
+| quxiao_sc | bit(1)      | YES  |     | b'1'    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.16 sec)
+
+mysql> insert into shoucang(id,sc_name,sc_jiage,sc_time) values('w123','mac',170.00,now());
+Query OK, 1 row affected (0.18 sec)
+
+mysql> select * from shoucang;
++------+---------+----------+---------------------+-----------+
+| id   | sc_name | sc_jiage | sc_time             | quxiao_sc |
++------+---------+----------+---------------------+-----------+
+| w123 | mac     |      170 | 2018-11-11 19:26:46 |          |
++------+---------+----------+---------------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> insert into shoucang(id,sc_name,sc_jiage,sc_time) values('j123','ysl',320.00,now());
+Query OK, 1 row affected (0.24 sec)
+
+mysql> insert into shoucang(id,sc_name,sc_jiage,sc_time) values('y123','nike',1500.00,now());
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into shoucang(id,sc_name,sc_jiage,sc_time) values('c123','adidas',1200.00,now());
+Query OK, 1 row affected (0.22 sec)
+
+mysql> insert into shoucang(id,sc_name,sc_jiage,sc_time) values('g123','dabao',15.00,now());
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from shoucang;
++------+---------+----------+---------------------+-----------+
+| id   | sc_name | sc_jiage | sc_time             | quxiao_sc |
++------+---------+----------+---------------------+-----------+
+| c123 | adidas  |     1200 | 2018-11-11 19:29:46 |          |
+| g123 | dabao   |       15 | 2018-11-11 19:30:40 |          |
+| j123 | ysl     |      320 | 2018-11-11 19:27:48 |          |
+| w123 | mac     |      170 | 2018-11-11 19:26:46 |          |
+| y123 | nike    |     1500 | 2018-11-11 19:29:11 |          |
++------+---------+----------+---------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> update shoucang set quxiao_sc=0 where sc_name='nike';
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from shoucang;
++------+---------+----------+---------------------+-----------+
+| id   | sc_name | sc_jiage | sc_time             | quxiao_sc |
++------+---------+----------+---------------------+-----------+
+| c123 | adidas  |     1200 | 2018-11-11 19:29:46 |          |
+| g123 | dabao   |       15 | 2018-11-11 19:30:40 |          |
+| j123 | ysl     |      320 | 2018-11-11 19:27:48 |          |
+| w123 | mac     |      170 | 2018-11-11 19:26:46 |          |
+| y123 | nike    |     1500 | 2018-11-11 19:29:11 |           |
++------+---------+----------+---------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql>
